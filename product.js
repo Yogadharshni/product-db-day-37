@@ -211,14 +211,9 @@ db.products.aggregate([
 
 
 //Delete the products which product price value are same
+//finding duplicate val
+db.products.aggregate(
+    { $group: { _id: "$product_price", count: { $sum: 1 } } }
+)
 
-db.products.aggregate([
-    { $group: { _id: "$product_price" } }
-]).sort({ _id: 1 })
 
-db.products.aggregate([
-    { $group: { _id: "$product_price", count: { $sum: 1 }, id: { $push: "$$ROOT._id" } } }
-
-])
-
-db.products.aggregate([{ $group: { _id: "$product_price" } }])
